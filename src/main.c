@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "util.h"
+#include "mlp.h"
 
 #define IMAGE_SIZE 28
 
@@ -76,11 +77,16 @@ int main(int argc, char *argv[]) {
         struct image *images = calloc(numImages, sizeof(struct image));
         getImages(images, numImages, imageFile, labelFile);
 
-        for (int i = 0; i < 2; i++) {
-                printImage(images[i]);
-                printf("%u\n", images[i].label);
-        }
+        // for (int i = 0; i < 10; i++) {
+        //         printImage(images[i]);
+        //         printf("%u\n", images[i].label);
+        // }
 
+        struct mlp *mlp = createMLP();
+        readMLP("assets/mlp.dat", mlp);
+
+        fclose(imageFile);
+        fclose(labelFile);
         return 0;
 }
 
