@@ -14,6 +14,7 @@
 #define INPUT_LAYER_SIZE 784
 #define HIDDER_LAYER_SIZE 256
 #define OUTPUT_LAYER_SIZE 10
+#define EULER_NUMBER 2.71828182846
 
 struct inputLayer {
         float vec[INPUT_LAYER_SIZE];
@@ -49,6 +50,8 @@ struct mlp *createMLP(void);
 void randomizeMLP(struct mlp *mlp);
 void writeMLP(const char *filename, struct mlp *mlp);
 void readMLP(const char *filename, struct mlp *mlp);
+
+void runMLP(struct mlp mlp, struct inputLayer input, struct outputLayer output);
 
 #endif
 

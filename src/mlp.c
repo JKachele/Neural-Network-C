@@ -9,6 +9,7 @@
 #include "mlp.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 #include <time.h>
 
 static float frand(float min, float max) {
@@ -151,6 +152,49 @@ void readMLP(const char *filename, struct mlp *mlp) {
         fclose(file);
 }
 
+float sigmoid(float f) {
+        return (1 / (1 + powf(EULER_NUMBER, -f)));
+}
+
+// Multiply input vector with input weight martix then add hidden layer biases. Then apply sigmoid
+static void inputToHidden(struct inputLayer *input, struct inputWeights weights,
+                struct hiddenLayer *hidden) {
+        for (int h = 0; h < HIDDER_LAYER_SIZE; h++) {
+                hidden->vec[h] = hidden->bias[h];
+                for (int i = 0; i < INPUT_LAYER_SIZE; i++) {
+                        hidden->vec[h] += weights.mat[h][i] * input->vec[i];
+                }
+                hidden->vec[h] = sigmoid(hidden->vec[h]);
+        }
+}
+
+static void hiddenToHidden(struct hiddenLayer *hidden1, struct hiddenWeights weights,
+                struct hiddenLayer *hidden2) {
+        for (int i = 0; i < HIDDER_LAYER_SIZE; i++) {
+                hidden2->vec[i] = hidden2->bias[i];
+                for (int j = 0; j < HIDDER_LAYER_SIZE; j++) {
+                        hidden2->vec[i] += weights.mat[i][j] * hidden1->vec[j];
+                }
+                hidden2->vec[i] = sigmoid(hidden2->vec[i]);
+        }
+}
+
+static void hiddenToOutput(struct hiddenLayer *hidden, struct outputWeights weights,
+                struct outputLayer outBias, struct outputLayer *output) {
+        for (int i = 0; i < HIDDER_LAYER_SIZE; i++) {
+                output->vec[i] = outBias.vec[i];
+                for (int j = 0; j < HIDDER_LAYER_SIZE; j++) {
+                        output->vec[i] += weights.mat[i][j] * hidden->vec[j];
+                }
+                output->vec[i] = sigmoid(output->vec[i]);
+        }
+}
+
 void runMLP(struct mlp mlp, struct inputLayer input, struct outputLayer output) {
+        inputToHidden(&input, mlp.inWeights, &mlp.hidden[0]);
+        for (int i = 0; i < NUM_LAYERS - 3; i++) {
+                hiddenToHidden(&mlp.hidden[i], mlp.hiddenWeights[i], &mlp.hidden[i+1]);
+        }
+        hiddenToOutput(&mlp.hidden[NUM_LAYERS-3], mlp.outWeights, mlp.outputBias, &output);
 }
 
