@@ -34,6 +34,13 @@ void printImage(struct image image) {
         printf("\033[48;5;16m\033[38;5;15m");
 }
 
+void printOutput(struct outputLayer output, float cost) {
+        for (int i = 0; i < 10; i++) {
+                printf("%d: %.2f\n", i, output.vec[i]);
+        }
+        printf("Cost: %.2f\n", cost);
+}
+
 FILE *openFile(const char *fileName) {
         FILE *file = fopen(fileName, "rb");
         if (file == NULL) {
@@ -64,6 +71,29 @@ void getImages(struct image images[], int numImages, FILE *imageFile, FILE *labe
         }
 }
 
+struct inputLayer imageToInput(struct image image) {
+        struct inputLayer input;
+        int i = 0;
+        for (int y = 0; y < IMAGE_SIZE; y++) {
+                for (int x = 0; x < IMAGE_SIZE; x++) {
+                        input.vec[i++] = (float)image.data[y][x] / 255;
+                }
+        }
+        return input;
+}
+
+float outputCost(struct outputLayer output, u8 expected) {
+        float cost = 0;
+        for (int i = 0; i < 10; i++) {
+                float diff = output.vec[i];
+                if (i == expected) {
+                        diff -= 1.0;
+                }
+                cost += (diff * diff);
+        }
+        return cost;
+}
+
 int main(int argc, char *argv[]) {
         const char *TrainImagesName = "assets/MNIST/train-images.idx3-ubyte";
         const char *TrainLabelsName = "assets/MNIST/train-labels.idx1-ubyte";
@@ -76,14 +106,17 @@ int main(int argc, char *argv[]) {
         int numImages = getdataLength(imageFile);
         struct image *images = calloc(numImages, sizeof(struct image));
         getImages(images, numImages, imageFile, labelFile);
-
-        // for (int i = 0; i < 10; i++) {
-        //         printImage(images[i]);
-        //         printf("%u\n", images[i].label);
-        // }
+        // printImage(images[0]);
 
         struct mlp *mlp = createMLP();
         readMLP("assets/mlp.dat", mlp);
+        // randomizeMLP(mlp);
+        // writeMLP("assets/mlp.dat", mlp);
+
+        mlp->input = imageToInput(images[0]);
+        runMLP(mlp);
+        float cost = outputCost(mlp->output, images[0].label);
+        printOutput(mlp->output, cost);
 
         fclose(imageFile);
         fclose(labelFile);

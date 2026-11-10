@@ -9,8 +9,7 @@
       "-Wextra",
       "-Wpedantic",
       "-Wno-unused-parameter",
-      "-Ilib/cglm/include",
-      "-DCGLM_OMIT_NS_FROM_STRUCT_API",
+      "-Wno-unused-variable",
       "-o",
       "build/src/mlp.c.o",
       "src/mlp.c"
@@ -29,8 +28,7 @@
       "-Wextra",
       "-Wpedantic",
       "-Wno-unused-parameter",
-      "-Ilib/cglm/include",
-      "-DCGLM_OMIT_NS_FROM_STRUCT_API",
+      "-Wno-unused-variable",
       "-o",
       "build/src/main.c.o",
       "src/main.c"
