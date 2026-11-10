@@ -8,6 +8,8 @@
 #ifndef MLP_H
 #define MLP_H
 
+#include "util.h"
+
 #define NUM_LAYERS 6
 #define INPUT_LAYER_SIZE 784
 #define HIDDER_LAYER_SIZE 256

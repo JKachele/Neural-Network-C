@@ -1,8 +1,9 @@
 CC = gcc
 CFLAGS = -std=c99 -g
 CFLAGS += -Wall -Wextra -Wpedantic 
-CFLAGS += -Wno-unused-parameter -Wno-unused-variable
-LDFLAGS = -lm
+CFLAGS += -Wno-unused-parameter
+CFLAGS += -Ilib/cglm/include -DCGLM_OMIT_NS_FROM_STRUCT_API
+LDFLAGS += lib/cglm/libcglm.a -lm -g
 
 BIN := bin
 BUILD_DIR := build
@@ -17,7 +18,10 @@ OUT := $(BIN)/out
 run: $(OUT)
 	$(OUT) | tee $(BIN)/output.log
 
-$(OUT): $(OBJ)
+libs:
+	cd lib/cglm && cmake . -DCGLM_STATIC=ON && make
+
+$(OUT): $(OBJ) libs
 	@mkdir -p $(dir $@)
 	$(CC) -o $(OUT) $(OBJ) $(LDFLAGS)
 

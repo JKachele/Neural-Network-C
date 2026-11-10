@@ -9,6 +9,8 @@
 #define UTIL_H
 
 #include <stdint.h>
+#include "cglm/cglm.h"
+#include "cglm/struct.h"
 
 typedef int8_t   int8;
 typedef uint8_t  uint8;

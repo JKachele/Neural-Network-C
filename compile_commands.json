@@ -1,0 +1,42 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-std=c99",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Wno-unused-parameter",
+      "-Ilib/cglm/include",
+      "-DCGLM_OMIT_NS_FROM_STRUCT_API",
+      "-o",
+      "build/src/mlp.c.o",
+      "src/mlp.c"
+    ],
+    "directory": "/home/e454984/Programing/CProjects/Neural-Network-C",
+    "file": "/home/e454984/Programing/CProjects/Neural-Network-C/src/mlp.c",
+    "output": "/home/e454984/Programing/CProjects/Neural-Network-C/build/src/mlp.c.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/gcc",
+      "-c",
+      "-std=c99",
+      "-g",
+      "-Wall",
+      "-Wextra",
+      "-Wpedantic",
+      "-Wno-unused-parameter",
+      "-Ilib/cglm/include",
+      "-DCGLM_OMIT_NS_FROM_STRUCT_API",
+      "-o",
+      "build/src/main.c.o",
+      "src/main.c"
+    ],
+    "directory": "/home/e454984/Programing/CProjects/Neural-Network-C",
+    "file": "/home/e454984/Programing/CProjects/Neural-Network-C/src/main.c",
+    "output": "/home/e454984/Programing/CProjects/Neural-Network-C/build/src/main.c.o"
+  }
+]

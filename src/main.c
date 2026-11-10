@@ -67,8 +67,8 @@ void getImages(struct image images[], int numImages, FILE *imageFile, FILE *labe
 int main(int argc, char *argv[]) {
         const char *TrainImagesName = "assets/MNIST/train-images.idx3-ubyte";
         const char *TrainLabelsName = "assets/MNIST/train-labels.idx1-ubyte";
-        const char *TestImagesName  = "assets/MNIST/t10k-images.idx3-ubyte";
-        const char *TestLabelsName  = "assets/MNIST/t10k-labels.idx1-ubyte";
+        // const char *TestImagesName  = "assets/MNIST/t10k-images.idx3-ubyte";
+        // const char *TestLabelsName  = "assets/MNIST/t10k-labels.idx1-ubyte";
 
         FILE *imageFile = openFile(TrainImagesName);
         FILE *labelFile = openFile(TrainLabelsName);
